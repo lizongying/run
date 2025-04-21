@@ -1,0 +1,96 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install cross
+        run: cargo install cross
+
+      - name: Build for Linux x86_64
+        run: cross build --target x86_64-unknown-linux-gnu --release
+
+      - name: Build for Linux ARM64
+        run: cross build --target aarch64-unknown-linux-gnu --release
+
+      - name: Build for macOS x86_64
+        run: cross build --target x86_64-apple-darwin --release
+
+      - name: Build for macOS ARM64
+        run: cross build --target aarch64-apple-darwin --release
+
+      - name: Build for Windows x86_64
+        run: cross build --target x86_64-pc-windows-msvc --release
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset Linux x86_64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./x86_64-unknown-linux-gnu
+          asset_name: x86_64-unknown-linux-gnu
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset Linux ARM64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./aarch64-unknown-linux-gnu
+          asset_name: aarch64-unknown-linux-gnu
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset macOS x86_64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./x86_64-apple-darwin
+          asset_name: x86_64-apple-darwin
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset macOS ARM64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./aarch64-apple-darwin
+          asset_name: aarch64-apple-darwin
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset Windows x86_64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./x86_64-pc-windows-msvc.exe
+          asset_name: x86_64-pc-windows-msvc.exe
+          asset_content_type: application/octet-stream

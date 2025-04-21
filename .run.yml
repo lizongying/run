@@ -1,0 +1,26 @@
+# sh/bash/zsh echo $SHELL
+env:
+jobs:
+  - label: Who am I
+    cmd: who am i
+
+  - label: Which
+    default_option: 1
+    options:
+      - label: node
+        cmd: which node
+
+      - label: python
+        cmd: which python
+
+      - label: golang
+        cmd: which golang
+
+      - label: rust
+        cmd: which rust
+
+      - label: java
+        cmd: which java
+
+      - label: kotlin
+        cmd: which kotlin
