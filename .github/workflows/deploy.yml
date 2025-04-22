@@ -31,13 +31,9 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Set output for upload_url
-        run: echo "upload_url=${{ steps.create_release.outputs.upload_url }}" >> $GITHUB_ENV
-
   rust_ubuntu:
     runs-on: ubuntu-latest
     needs: release
-    if: ${{ github.event.inputs.step == 'rust_ubuntu' }}
     strategy:
       matrix:
         target:
@@ -53,7 +49,6 @@ jobs:
 
       - name: Build
         run: |
-          cd rust
           cross build --release --target=${{ matrix.target }}
 
       - name: Upload Release Asset Windows
@@ -81,7 +76,6 @@ jobs:
   rust_macos:
     runs-on: macos-latest
     needs: release
-    if: ${{ github.event.inputs.step == 'rust_macos' }}
     strategy:
       matrix:
         target:
@@ -95,16 +89,10 @@ jobs:
         if: matrix.target == 'x86_64-apple-darwin'
         run: |
           rustup target add x86_64-apple-darwin
-          rustup show
 
       - name: Build for macOS
         run: |
-          cd rust
-          cargo build --release --verbose --target=${{ matrix.target }}
-
-      - name: Access release upload_url
-        run: |
-          echo "The release upload URL is: ${{ needs.release.outputs.upload_url }}"
+          cargo build --release --target=${{ matrix.target }}
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
