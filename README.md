@@ -20,6 +20,28 @@ The app supports:
 
 ![image](./screenshots/run.webp)
 
+## Configuration
+
+- env: Shell address, such as `bash`, `/bin/bash`, `zsh`, `/bin/zsh`. By default, it’s empty. Use `echo $SHELL` to check.
+- job: There are two types of jobs: one is for executing a single shell command, and the other allows selecting from multiple commands, which requires configuring options.
+
+```yaml
+#cat ~/.run.yml
+
+env:
+jobs:
+  - label: Who am I
+    cmd: who am i
+
+  - label: Which
+    default_option: 0
+    options:
+      - label: node
+        cmd: which node
+
+...
+```
+
 ## Support for the project
 
 ![image](./screenshots/appreciate.png)
