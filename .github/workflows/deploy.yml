@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: rust/target/${{ matrix.target }}/release/${{ env.PACKAGE_NAME }}.exe
+          asset_path: target/${{ matrix.target }}/release/${{ env.PACKAGE_NAME }}.exe
           asset_name: ${{ env.PACKAGE_NAME }}_${{ matrix.target }}.exe
           asset_content_type: application/octet-stream
 
@@ -69,7 +69,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: rust/target/${{ matrix.target }}/release/${{ env.PACKAGE_NAME }}
+          asset_path: target/${{ matrix.target }}/release/${{ env.PACKAGE_NAME }}
           asset_name: ${{ env.PACKAGE_NAME }}_${{ matrix.target }}
           asset_content_type: application/octet-stream
 
@@ -100,6 +100,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: rust/target/${{ matrix.target }}/release/${{ env.PACKAGE_NAME }}
+          asset_path: target/${{ matrix.target }}/release/${{ env.PACKAGE_NAME }}
           asset_name: ${{ env.PACKAGE_NAME }}_${{ matrix.target }}
           asset_content_type: application/octet-stream
