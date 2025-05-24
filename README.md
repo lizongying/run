@@ -20,6 +20,21 @@ The app supports:
 
 ![image](./screenshots/run.webp)
 
+## Download
+
+[release](https://github.com/lizongying/run/releases)
+
+## Usage
+
+```shell
+chmod +x ~/Download/run_aarch64-apple-darwin
+ln -s ~/Download/run_aarch64-apple-darwin /usr/local/bin/run
+```
+
+```shell
+run
+```
+
 ## Configuration
 
 - env: Shell address, such as `bash`, `/bin/bash`, `zsh`, `/bin/zsh`. By default, it’s empty. Use `echo $SHELL` to check.
@@ -42,6 +57,6 @@ jobs:
 ...
 ```
 
-## Support for the project
+## Support
 
 ![image](./screenshots/appreciate.png)

@@ -17,6 +17,21 @@ TUI（文本用户界面）展示任務列表，允許用户選擇任務并執�
 
 ![image](./screenshots/run.webp)
 
+## 下載
+
+[release](https://github.com/lizongying/run/releases)
+
+## 使用
+
+```shell
+chmod +x ~/Download/run_aarch64-apple-darwin
+ln -s ~/Download/run_aarch64-apple-darwin /usr/local/bin/run
+```
+
+```shell
+run
+```
+
 ## 配置
 
 - env: shell地址。如`bash`、`/bin/bash`、`zsh`、`/bin/zsh`，默認為空, 使用`echo $SHELL`
